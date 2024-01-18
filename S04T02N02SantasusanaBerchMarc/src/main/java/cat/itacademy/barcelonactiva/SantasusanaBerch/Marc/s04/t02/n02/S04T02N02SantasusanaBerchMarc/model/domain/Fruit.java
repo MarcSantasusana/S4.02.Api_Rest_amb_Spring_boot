@@ -10,9 +10,9 @@ public class Fruit {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    Long id;
-    String name;
-    Integer quantityKg;
+    private Long id;
+    private String name;
+    private Integer quantityKg;
 
     public Fruit()
     {

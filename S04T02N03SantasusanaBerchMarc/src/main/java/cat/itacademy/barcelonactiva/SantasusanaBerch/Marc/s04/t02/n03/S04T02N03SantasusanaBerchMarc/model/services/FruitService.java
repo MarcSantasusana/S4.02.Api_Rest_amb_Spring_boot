@@ -8,10 +8,12 @@ import java.util.Optional;
 public interface FruitService {
 
     void add(Fruit fruit);
-    void update(Fruit fruit, String name, Integer quantityKg);
+    void update(String id, String name, Integer quantityKg);
     void delete(String id);
 
-    Optional<Fruit> getOne(String id);
+    Fruit getOne(String id);
 
     List<Fruit> getAll();
+
+
 }

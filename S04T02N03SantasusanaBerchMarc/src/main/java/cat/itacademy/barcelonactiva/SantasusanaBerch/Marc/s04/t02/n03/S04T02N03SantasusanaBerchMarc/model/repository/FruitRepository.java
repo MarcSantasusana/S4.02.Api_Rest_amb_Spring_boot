@@ -5,8 +5,12 @@ import cat.itacademy.barcelonactiva.SantasusanaBerch.Marc.s04.t02.n03.S04T02N03S
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface FruitRepository extends MongoRepository<Fruit, String> {
+
+    Optional<Fruit> findByName(String name);
 
 
 }

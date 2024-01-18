@@ -14,9 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/fruita")
+@RequestMapping("api/v1/fruita")
 public class FruitController {
-
 
     private FruitService fruitService;
     @Autowired
@@ -25,7 +24,7 @@ public class FruitController {
         this.fruitService = fruitService;
     }
 
-   @GetMapping()
+    @GetMapping()
     public String viewHomePage()
     {
         return "Fruit home page";
@@ -42,22 +41,13 @@ public class FruitController {
 
     @PutMapping("/update")
     public ResponseEntity<Fruit> updateFruit(@RequestParam Long id,
-                            @RequestParam(required = false) String name,
-                            @RequestParam(required = false) Integer quantityKg)
+                                             @RequestParam(required = false) String name,
+                                             @RequestParam(required = false) Integer quantityKg)
     {
 
-        Optional<Fruit> fruitOpt = fruitService.getOne(id);
 
-        if(fruitOpt.isPresent())
-        {
-            fruitService.update(fruitOpt.get(), name, quantityKg);
-            return new ResponseEntity(fruitOpt.get(), HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity("Fruit with id " + id + " is not found", HttpStatus.NOT_FOUND);
-        }
-
-
+        fruitService.update(id, name, quantityKg);
+        return new ResponseEntity("Fruit with id " + id + " has been updated successfully", HttpStatus.OK);
 
 
     }
@@ -65,35 +55,19 @@ public class FruitController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Fruit> deleteFruit(@PathVariable(name = "id") Long id)
     {
-        Optional<Fruit> fruitOpt = fruitService.getOne(id);
+        Fruit fruit = fruitService.getOne(id);
 
-        if(fruitOpt.isPresent())
-        {
-            fruitService.delete(id);
-            return new ResponseEntity("Fruit with id " + id + " has been deleted successfully", HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity("Fruit with id " + id + " is not found", HttpStatus.NOT_FOUND);
-        }
-
-
+        fruitService.delete(id);
+        return new ResponseEntity("Fruit with id " + id + " has been deleted successfully", HttpStatus.OK);
 
     }
 
     @GetMapping("/getOne/{id}")
     public ResponseEntity<Fruit> getOneFruit(@PathVariable(name = "id") Long id)
     {
-       Optional<Fruit> fruitOpt = fruitService.getOne(id);
+        Fruit fruit = fruitService.getOne(id);
 
-        if(fruitOpt.isPresent())
-        {
-            return new ResponseEntity(fruitOpt.get(), HttpStatus.OK);
-        }
-        else {
-            return new ResponseEntity("Fruit with id " + id + " is not found", HttpStatus.NOT_FOUND);
-        }
-
-
+        return new ResponseEntity(fruit, HttpStatus.OK);
     }
 
     @GetMapping("/getAll")
@@ -101,6 +75,8 @@ public class FruitController {
     {
         return fruitService.getAll();
     }
+
+
 
 
 }
